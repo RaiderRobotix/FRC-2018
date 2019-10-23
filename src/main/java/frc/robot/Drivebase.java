@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 
 public final class Drivebase {
 
-	private static Drivebase m_instance;
+	private static final Drivebase m_instance = new Drivebase();
 
 	private final VictorSP m_leftDrives = new VictorSP(Constants.LEFT_DRIVES_PWM);
 	private final VictorSP m_rightDrives = new VictorSP(Constants.RIGHT_DRIVES_PWM);
@@ -35,47 +35,45 @@ public final class Drivebase {
 
 	}
 
-	public static Drivebase getInstance() {
-		if (m_instance == null) {
-			m_instance = new Drivebase();
-		}
+	public static Drivebase get() {
 		return m_instance;
 	}
 
-	public void setSpeed(double speed) {
-		setSpeed(speed, speed);
+	public void speed(double speed) {
+		speed(speed, speed);
 	}
 
-	public void setSpeed(double leftSpeed, double rightSpeed) {
+	public void speed(double leftSpeed, double rightSpeed) {
 		m_leftDrives.set(leftSpeed * (Constants.RIGHT_DRIVE_MOTORS_INVERTED ? -1.0 : 1.0));
 		m_rightDrives.set(rightSpeed * (Constants.LEFT_DRIVE_MOTORS_INVERTED ? -1.0 : 1.0));
 	}
 
-	public void brakesOn() {
-		m_brakesOn = true;
-		m_leftBrake.set(Constants.LEFT_BRAKES_ON);
-		m_rightBrake.set(Constants.RIGHT_BRAKES_ON);
+	public void brakes(boolean brakesOn) {
+		if (brakesOn) {
+			m_brakesOn = true;
+			m_leftBrake.set(Constants.LEFT_BRAKES_ON);
+			m_rightBrake.set(Constants.RIGHT_BRAKES_ON);
+		} else {
+			m_brakesOn = false;
+			m_leftBrake.set(Constants.LEFT_BRAKES_OFF);
+			m_rightBrake.set(Constants.RIGHT_BRAKES_OFF);
+		}
+
 	}
 
-	public void brakesOff() {
-		m_brakesOn = false;
-		m_leftBrake.set(Constants.LEFT_BRAKES_OFF);
-		m_rightBrake.set(Constants.RIGHT_BRAKES_OFF);
-	}
-
-	public boolean brakesAreOn() {
+	public boolean brakes() {
 		return m_brakesOn;
 	}
 
-	public double getLeftBrake() {
+	public double leftBrake() {
 		return m_leftBrake.get();
 	}
 
-	public double getRightBrake() {
+	public double rightBrake() {
 		return m_rightBrake.get();
 	}
 
-	public double getLeftEncoderDistance() {
+	public double leftEncoderDistance() {
 		return m_leftEncoder.getDistance();
 	}
 
@@ -83,10 +81,10 @@ public final class Drivebase {
 	// return m_rightEncoder.getDistance();
 	// }
 
-	public double getAverageEncoderDistance() {
+	public double averageEncoderDistance() {
 		// return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2.0;
 		// TODO: fix
-		return getLeftEncoderDistance();
+		return leftEncoderDistance();
 	}
 
 	/**
@@ -100,15 +98,15 @@ public final class Drivebase {
 	 */
 	public boolean turnToAngle(double angle, double speed) {
 		if (!m_drivingStep) {
-			brakesOff();
+			brakes(false);
 			resetSensors();
 			m_drivingStep = true;
 		} else {
 			speed = Math.copySign(speed, angle);
-			setSpeed(speed, -speed);
+			speed(speed, -speed);
 			if (Math.abs(getGyroAngle() - angle) < Constants.TURN_TOLERANCE) {
 				m_drivingStep = false;
-				setSpeed(0.0);
+				speed(0.0);
 			}
 		}
 
@@ -126,25 +124,25 @@ public final class Drivebase {
 	 */
 	public boolean driveStraight(double distance, double speed, boolean slowDown) {
 		if (!m_drivingStep) {
-			brakesOff();
+			brakes(false);
 			resetSensors();
 			m_drivingStep = true;
 		} else {
 			speed = Math.copySign(speed, distance);
 			double leftSpeed = speed;
 			double rightSpeed = speed;
-			if (Math.abs(getAverageEncoderDistance() - distance) <
+			if (Math.abs(averageEncoderDistance() - distance) <
 			// Keeping expected and observed values
 			// within the same absolute value
 			// because if they differ in sign,
 			// that's more than a coding problem
 					Constants.DRIVE_STRAIGHT_DISTANCE_TOLERANCE) {
-				setSpeed(0.0);
+				speed(0.0);
 				m_drivingStep = false;
 			} else if (slowDown) { // If within slow range, set to slow speed
-				if (getAverageEncoderDistance() >= distance - Constants.DRIVE_STRAIGHT_SLOW_RANGE)
+				if (averageEncoderDistance() >= distance - Constants.DRIVE_STRAIGHT_SLOW_RANGE)
 					setToSlowSpeed(speed > 0.0);
-				else if (getAverageEncoderDistance() >= distance + Constants.DRIVE_STRAIGHT_DISTANCE_TOLERANCE)
+				else if (averageEncoderDistance() >= distance + Constants.DRIVE_STRAIGHT_DISTANCE_TOLERANCE)
 					setToSlowSpeed(speed < 0.0);
 			} else if (Math.abs(getGyroAngle()) > Constants.VEER_TOLERANCE) {
 				// Adjust speeds for in case of veering
@@ -159,7 +157,7 @@ public final class Drivebase {
 					else
 						leftSpeed += Constants.DRIVE_SPEED_CORRECTION;
 				}
-				setSpeed(leftSpeed, rightSpeed);
+				speed(leftSpeed, rightSpeed);
 			}
 		}
 		return (!m_drivingStep);
@@ -181,9 +179,9 @@ public final class Drivebase {
 	 */
 	public void setToSlowSpeed(boolean slowDown) {
 		if (slowDown) {
-			setSpeed(Constants.SLOW_SPEED_STRONG, Constants.SLOW_SPEED_WEAK);
+			speed(Constants.SLOW_SPEED_STRONG, Constants.SLOW_SPEED_WEAK);
 		} else {
-			setSpeed(-Constants.SLOW_SPEED_WEAK, -Constants.SLOW_SPEED_STRONG);
+			speed(-Constants.SLOW_SPEED_WEAK, -Constants.SLOW_SPEED_STRONG);
 		}
 	}
 
