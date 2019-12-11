@@ -2,10 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public final class OI {
+final class OI {
 
 	// ===== Robot Mechanisms =====
-	private final Drivebase m_drives = Drivebase.get();
+	private final Drivebase m_drives = Drivebase.m_instance;
 	// private final Climber m_climber;
 
 	// ===== Joysticks =====
@@ -14,22 +14,11 @@ public final class OI {
 	private final Joystick m_operatorStick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
 	// ===== Automatic Constants =====
-	public boolean m_presetDone = true;
+	boolean m_presetDone = true;
 
-	private static final OI m_instance = new OI();
+	static final OI m_instance = new OI();
 
-	public static OI getInstance() {
-		return m_instance;
-	}
-
-	private OI() {
-	}
-
-	public void teleop() {
-		// =========== RESETS ===========
-		if (getRightButton(8)) {
-			m_drives.resetSensors();
-		}
+	void teleop() {
 
 		// =========== DRIVES ===========
 		if (getLeftTrigger()) {
@@ -45,42 +34,42 @@ public final class OI {
 		}
 	}
 
-	public double getLeftY() {
+	double getLeftY() {
 		double yval = -m_leftStick.getY();
 		return Math.abs(yval) < Constants.JOYSTICK_DEADBAND ? 0.0 : yval;
 	}
 
-	public double getRightY() {
+	double getRightY() {
 		double yval = -m_rightStick.getY();
 		return Math.abs(yval) < Constants.JOYSTICK_DEADBAND ? 0.0 : yval;
 	}
 
-	public double getOperatorY() {
+	double getOperatorY() {
 		double yval = -m_operatorStick.getY();
 		return Math.abs(yval) < Constants.JOYSTICK_DEADBAND ? 0.0 : yval;
 	}
 
-	public boolean getOperatorTrigger() {
+	boolean getOperatorTrigger() {
 		return m_operatorStick.getTrigger();
 	}
 
-	public boolean getOperatorButton(int btn) {
+	boolean getOperatorButton(int btn) {
 		return m_operatorStick.getRawButton(btn);
 	}
 
-	public boolean getRightTrigger() {
+	boolean getRightTrigger() {
 		return m_rightStick.getTrigger();
 	}
 
-	public boolean getLeftTrigger() {
+	boolean getLeftTrigger() {
 		return m_leftStick.getTrigger();
 	}
 
-	public boolean getRightButton(int btn) {
+	boolean getRightButton(int btn) {
 		return m_rightStick.getRawButton(btn);
 	}
 
-	public boolean getLeftButton(int btn) {
+	boolean getLeftButton(int btn) {
 		return m_leftStick.getRawButton(btn);
 	}
 }

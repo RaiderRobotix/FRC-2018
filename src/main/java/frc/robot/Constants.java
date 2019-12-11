@@ -3,14 +3,6 @@ package frc.robot;
 interface Constants {
 
 	// Auto-Driving Constants
-	/** In Degrees */
-	double TURN_TOLERANCE = 1.0;
-	double VEER_TOLERANCE = 1.0;
-	double DRIVE_SPEED_CORRECTION = 0.15;
-	double DRIVE_STRAIGHT_DISTANCE_TOLERANCE = 1.0;
-	double SLOW_SPEED_WEAK = 0.12;
-	double SLOW_SPEED_STRONG = 0.18;
-	double DRIVE_STRAIGHT_SLOW_RANGE = 12.0;
 
 	// PWMs (Control)
 	int RIGHT_BRAKE_PWM = 1;
@@ -18,35 +10,18 @@ interface Constants {
 	int LEFT_BRAKE_PWM = 7;
 	int LEFT_DRIVES_PWM = 8;
 
-	int RIGHT_ELEVATOR_PWM = 2;
-	int LEFT_ELEVATOR_PWM = 9;
-
-	int RIGHT_CLIMBER_PWM = 3;
-	int LEFT_CLIMBER_PWM = 6;
-
 	// Brake Positions
 	double RIGHT_BRAKES_ON = 0.18;
 	double RIGHT_BRAKES_OFF = 1.0;
 	double LEFT_BRAKES_ON = 0.63;
 	double LEFT_BRAKES_OFF = 0.20;
 
-	int LEFT_ENCODER_PWM_A = 8;
-	int LEFT_ENCODER_PWM_B = 7;
-
-	int ELEVATOR_ENCODER_PWM_A = 1;
-	int ELEVATOR_ENCODER_PWM_B = 0;
-
 	// Auton Information
 	double TIRE_CIRCUMFERENCE = 29.898;
 	double COUNTS_PER_REVOLUTION = 128;
 	double GEAR_RATIO = 0.0714286; // (Driver: Encoder
 									// Gear, Driven: Wheel
-									// Gear)
-	double INCHES_PER_REVOLUTION = GEAR_RATIO * TIRE_CIRCUMFERENCE;
-	double INCHES_PER_COUNT = INCHES_PER_REVOLUTION / COUNTS_PER_REVOLUTION;
-	double ELEVATOR_INCHES_PER_REVOLUTION = 14.3567;
-	double ELEVATOR_INCHES_PER_COUNT = ELEVATOR_INCHES_PER_REVOLUTION / COUNTS_PER_REVOLUTION;
-	double AUTON_TIME = 15.0; // (In Seconds)
+									// Gear)	
 
 	// Joysticks
 	int LEFT_JOYSTICK_PORT = 0;
@@ -58,52 +33,9 @@ interface Constants {
 	// Button Constants
 	int OPERATOR_OVERRIDE_BUTTON = 7;
 
-	// CAN Addresses
-	int PCM_CAN_ADDRESS = 0;
-	int PDP_CAN_ADDRESS = 15;
-
-	// Solenoid Numbers
-	int RIGHT_TILT_SOLENOID = 7;
-	int LEFT_TILT_SOLENOID = 0;
-	int GRABBER_SOLENOID = 3;
-
-	// Inversions
 	// motors (probably already correct) and encoder
 	boolean RIGHT_DRIVE_MOTORS_INVERTED = false;
 	boolean LEFT_DRIVE_MOTORS_INVERTED = true;
-	boolean LEFT_ENCODER_INVERTED = false;
-	boolean RIGHT_ENCODER_INVERTED = false;
-
-	boolean LEFT_ELEVATOR_INVERTED = true;
-	boolean RIGHT_ELEVATOR_INVERTED = true;
-
-	boolean LEFT_CLIMBER_MOTOR_INVERTED = false;
-	boolean RIGHT_CLIMBER_MOTOR_INVERTED = true;
-
-	boolean ELEVATOR_ENCODER_INVERTED = true;
-
-	// Elevator range and tolerance constants
-	double ELEVATOR_UP_SCALED_RANGE_START = 24.0;
-	double ELEVATOR_UP_SCALED_RANGE_END = 0.5 * ELEVATOR_UP_SCALED_RANGE_START;
-
-	double ELEVATOR_DOWN_SPEED_NEAR_TARGET = -0.2;
-	double ELEVATOR_DOWN_SPEED = -0.35;
-
-	double ELEVATOR_LOWER_LIMIT = 0.0;
-	double ELEVATOR_UPPER_LIMIT = 100.0;
-	double ALLOWED_ELEVATOR_DEVIATION = 1.0; // in inches
-
-	double ELEVATOR_MANUAL_DOWN_RATE = 0.40;
-	double ELEVATOR_MANUAL_UP_RATE = 0.75;
-
-	double ELEVATOR_DOUBLE_HEIGHT_THRESHOLD = 52.0;
-
-	double ELEVATOR_DOWN_PRESET = 1.0;
-	double ELEVATOR_SWITCH_PRESET = 32.0;
-	double ELEVATOR_SCALE_PRESET = 90.0;
-	int LEFT_HANGER_CAN_ADDRESS = 0;
-	int RIGHT_HANGER_CAN_ADDRESS = 0;
-	int DEPLOYER_SOLENOID = 0;
-	boolean LEFT_HANGER_MOTOR_INVERTED = false;
-	boolean RIGHT_HANGER_MOTOR_INVERTED = false;
+	
+	
 }
