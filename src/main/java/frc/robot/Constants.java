@@ -5,10 +5,6 @@ interface Constants {
 	// Auto-Driving Constants
 
 	// PWMs (Control)
-	int RIGHT_BRAKE_PWM = 1;
-	int RIGHT_DRIVES_PWM = 0;
-	int LEFT_BRAKE_PWM = 7;
-	int LEFT_DRIVES_PWM = 8;
 
 	// Brake Positions
 	double RIGHT_BRAKES_ON = 0.18;
