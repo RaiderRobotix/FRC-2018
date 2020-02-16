@@ -1,52 +1,39 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 
 final class Drivebase {
 
+	int RIGHT_FRONT_DRIVES_PWM = 1;
+	int RIGHT_BACK_DRIVES_PWM = 2;
+	int LEFT_FRONT_DRIVES_PWM = 7;
+	int LEFT_BACK_DRIVES_PWM = 8;
+
+	private final VictorSP leftFront = new VictorSP(LEFT_FRONT_DRIVES_PWM);
+	private final VictorSP leftBack = new VictorSP(LEFT_BACK_DRIVES_PWM);
+
+	private final VictorSP rightFront = new VictorSP(RIGHT_FRONT_DRIVES_PWM);
+	private final VictorSP rightBack = new VictorSP(RIGHT_BACK_DRIVES_PWM);
+
+	SpeedControllerGroup left = new SpeedControllerGroup(leftFront, leftBack);
+
+	SpeedControllerGroup right = new SpeedControllerGroup(rightFront, rightBack);
+
 	static final Drivebase m_instance = new Drivebase();
 
-	private final VictorSP m_leftDrives = new VictorSP(Constants.LEFT_DRIVES_PWM);
-	private final VictorSP m_rightDrives = new VictorSP(Constants.RIGHT_DRIVES_PWM);
-
-	private final Servo m_rightBrake = new Servo(Constants.RIGHT_BRAKE_PWM);
-	private final Servo m_leftBrake = new Servo(Constants.LEFT_BRAKE_PWM);
-
-	private boolean m_brakesOn;
+	{
+		left.setInverted(Constants.LEFT_DRIVE_MOTORS_INVERTED);
+		right.setInverted(Constants.RIGHT_DRIVE_MOTORS_INVERTED);
+	}
 
 	void speed(double speed) {
 		speed(speed, speed);
 	}
 
 	void speed(double leftSpeed, double rightSpeed) {
-		m_leftDrives.set(leftSpeed * (Constants.RIGHT_DRIVE_MOTORS_INVERTED ? -1.0 : 1.0));
-		m_rightDrives.set(rightSpeed * (Constants.LEFT_DRIVE_MOTORS_INVERTED ? -1.0 : 1.0));
-	}
-
-	void brakes(boolean brakesOn) {
-		if (brakesOn) {
-			m_brakesOn = true;
-			m_leftBrake.set(Constants.LEFT_BRAKES_ON);
-			m_rightBrake.set(Constants.RIGHT_BRAKES_ON);
-		} else {
-			m_brakesOn = false;
-			m_leftBrake.set(Constants.LEFT_BRAKES_OFF);
-			m_rightBrake.set(Constants.RIGHT_BRAKES_OFF);
-		}
-
-	}
-
-	boolean brakes() {
-		return m_brakesOn;
-	}
-
-	double leftBrake() {
-		return m_leftBrake.get();
-	}
-
-	double rightBrake() {
-		return m_rightBrake.get();
+		left.set(leftSpeed);
+		right.set(rightSpeed);
 	}
 
 }
