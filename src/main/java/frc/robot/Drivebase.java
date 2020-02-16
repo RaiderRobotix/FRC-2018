@@ -16,14 +16,17 @@ final class Drivebase {
 	private final VictorSP rightFront = new VictorSP(RIGHT_FRONT_DRIVES_PWM);
 	private final VictorSP rightBack = new VictorSP(RIGHT_BACK_DRIVES_PWM);
 
+	boolean RIGHT_INVERTED = true;
+	boolean LEFT_INVERTED = false;
+
 	SpeedControllerGroup left = new SpeedControllerGroup(leftFront, leftBack);
 	SpeedControllerGroup right = new SpeedControllerGroup(rightFront, rightBack);
 
 	public static final Drivebase drives = new Drivebase();
 
 	{
-		left.setInverted(Constants.LEFT_DRIVE_MOTORS_INVERTED);
-		right.setInverted(Constants.RIGHT_DRIVE_MOTORS_INVERTED);
+		left.setInverted(LEFT_INVERTED);
+		right.setInverted(RIGHT_INVERTED);
 	}
 
 	void speed(double speed) {
