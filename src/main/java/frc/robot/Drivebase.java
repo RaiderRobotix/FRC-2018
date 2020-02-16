@@ -19,7 +19,7 @@ final class Drivebase {
 	SpeedControllerGroup left = new SpeedControllerGroup(leftFront, leftBack);
 	SpeedControllerGroup right = new SpeedControllerGroup(rightFront, rightBack);
 
-	static final Drivebase m_instance = new Drivebase();
+	public static final Drivebase drives = new Drivebase();
 
 	{
 		left.setInverted(Constants.LEFT_DRIVE_MOTORS_INVERTED);
