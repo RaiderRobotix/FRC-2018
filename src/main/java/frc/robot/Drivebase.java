@@ -17,7 +17,6 @@ final class Drivebase {
 	private final VictorSP rightBack = new VictorSP(RIGHT_BACK_DRIVES_PWM);
 
 	SpeedControllerGroup left = new SpeedControllerGroup(leftFront, leftBack);
-
 	SpeedControllerGroup right = new SpeedControllerGroup(rightFront, rightBack);
 
 	static final Drivebase m_instance = new Drivebase();
