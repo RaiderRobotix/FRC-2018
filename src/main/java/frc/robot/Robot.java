@@ -11,7 +11,7 @@ final class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		OI.m_instance.teleop();
+		Drivebase.drives.speed(OI.oi.getLeftY(), OI.oi.getRightY());
 	}
 
 }
