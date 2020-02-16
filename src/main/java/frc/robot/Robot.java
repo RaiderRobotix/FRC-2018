@@ -9,13 +9,9 @@ final class Robot extends TimedRobot {
 		RobotBase.startRobot(Robot::new);
 	}
 
-	// ===== ROBOT MECHANISMS =====
-	private final OI m_OI = OI.m_instance;
-	private final Drivebase m_drives = Drivebase.m_instance;
-
 	@Override
 	public void teleopPeriodic() {
-		m_OI.teleop();
+		OI.m_instance.teleop();
 	}
 
 }
